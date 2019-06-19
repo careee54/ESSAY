@@ -1,0 +1,192 @@
+---
+title: "DAI rašto darbas. Nedarbo lygio tendencija Lietuvoje 2009-2018 m."
+author: "Karolina Jacevic"
+date: '2019-06-19'
+output: pdf_document
+---
+
+```{r setup, include=FALSE, echo=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Turinys
+
+1. Įvadas
+2. Nedarbo lygis 2009-2018
+3. Duomenys
+4. Rezultatai
+5. Išvados
+
+
+
+
+## Įvadas 
+
+Viena opiausių valstybių problemų yra nedarbas. Nedarbo lygiu parodoma žmogaus
+socialinė padėtis ir valstybės ekonominė padėtis. Kaip teigia A. Damulienė (2011),
+dauguma politikų nedarbo lygį vertina kaip vieną ekonomikos rodiklių. Ši problema
+paveikia ne tik paminėtą socialinę sferą, bet ir psichologinę individo sferą, kai žmogus
+nesugeba rasti darbo. Kuo ilgiau asmuo nesusiranda darbo, atsiranda ilgalaikio nedarbo
+problema, kai potencialus darbininkas praranda darbinius įgūdžius, pasitikėjimą savimi
+ir valstybe bei svarbiausia sfera - ekonominė, kuri šiuo metu yra labai populiari
+šiandieniniame gyvenime, nes kiekvienam valstybės gyventojui yra svarbu gauti
+pajamas už atliktą darbą, o valstybei gerinti finansinę padėtį.
+Nedarbas Lietuvoje tyrinėtas nuo Lietuvos nepriklausomybės atkūrimo laikų iki šių laikų.
+Moksliniuose šaltiniuose analizuojamos (ilgalaikio) nedarbo priežastys bei sprendimo
+būdai, ekonominių svyravimų poveikis nedarbo lygiui, jaunimo nedarbas, įsidarbinimo
+galimybės darbo rinkoje. Paminėtas analizuojamas temas tyrinėjo: Beržinskienė, D. ir
+Būdvytytė-Gudienė, A. (2011); Švedaitė, E. (2012); Paltarokaitė, K. (?); Kiaušienė, I. ir
+Vidrevičienė, I (2015); Damulienė, A. (2011); Pocius, A. ir Okunevičiūtė-Neverauskienė,
+L. (2003) ir kiti.
+Rašto darbe siekiama išsiaiškinti Lietuvos nedarbo lygio tendencijas ir sprendimo būdus.
+Tyrimo objektas: nedarbas Lietuvoje.
+Tyrimo uždaviniai:
+1. Ar nedarbo lygis Lietuvoje didėjo/mažėjo?
+2. Kokie valstybės sprendimo būdai mažinti nedarbo lygį Lietuvoje?
+3. Ko įmanoma tikėtis ateityje?
+
+Tyrimo metodas: statistiniai duomenys išreikšti lentelėmis, grafikais.
+
+## Nedarbo lygio tendencijos 2009-2018
+
+```{r,echo=FALSE, include=FALSE}
+if(!require(rsdmx)) install.packages("rsdmx");
+  library(rsdmx)
+if(!require(tidyverse)) {install.packages("tidyverse")
+  library(tidyverse)}
+if(!require(utf8)) {install.packages("utf8")
+  library(utf8)}
+if(!require(eurostat)) {install.packages("eurostat")
+  library(eurostat)}
+if(!require(openxlsx))install.packages("openxlsx"); 
+  library(openxlsx)
+
+
+URL <- "https://osp-rs.stat.gov.lt/rest_xml/dataflow" 
+meta <- readSDMX(URL)
+meta <- as.data.frame(meta)
+write.xlsx(meta, "LSD_meta.xlsdx")
+
+S3R347_M3030903 <- readSDMX(providerId = "LSD", 
+                            resource = "data",
+                            flowRef = "S3R347_M3030903",
+                            dsd = TRUE)
+S3R347_M3030903 <- as.data.frame(S3R347_M3030903, label=TRUE)
+
+df <- S3R347_M3030903 %>% filter (lytis==0, 
+                                  LAIKOTARPIS>="2009")
+df_2009 <- df %>% filter(LAIKOTARPIS=="2009", apskritysLR_label.lt=="Sostinės regionas")
+```
+
+```{r, df_2009, echo=FALSE}
+
+ggplot(df, aes(x=LAIKOTARPIS, y=obsValue, col=LAIKOTARPIS, group=df$LAIKOTARPIS))+
+  geom_line()+
+  geom_point()+
+  labs(title = "NEDARBO LYGIS LIETUVOJE",
+       subtitle = "Šaltinis: LSD(S3R347_M3030903)",
+       x="Laikotarpis",
+       y="Procentai")
+```
+
+#  2009 metai 
+
+
+2007 - 2008 metai svarbus laikotarpis visam pasauliui. Pasaulį pasiekusi ekonominė
+krizė sukėlė didelių ekonominių nuosmukių. Didžiausia po XX amžiaus ekonominė krizė,
+Lietuvą pasiekė 2008 metais ir paveikė darbo rinką, padidindama nedarbo lygį 7 proc.
+punktais (Damulienė, A. (2012). Ekonomikos svyravimų poveikis Lietuvos nedarbo lygiui
+1998-2011 metais. Societal innovations for global growth [elektroninis išteklius], 927-
+938)
+Minėtais 2009 metais, nedarbo lygis padidėjo iki 14,2 proc., tam įtakojo mažėjantis
+laisvų darbo vietų skaičius, o naujos darbo vietos nebuvo taip greitai kuriamos.
+
+
+
+Nedarbas sparčiai padidėjo, dėl ekonominės krizės. Tuo pačiu tai palietė BVP, darbo
+užmokesčio, darbo vietų sumažėjimą bei iškilo kita aktuali problema – emigracija.
+Valdžios siūlymai – esamomis galimybėmis didinti užimtumą, nors didelių pasikeitimų
+neįgyvendinta.
+
+
+# 2010 metai
+
+2010 metų pradžia pasiekė aukščiausią nedarbo lygį – 18,2 proc. Teigiama, kad
+Lietuvoje (nebuvo imtasi darbo santykių liberalizavimo, taip pat žlugdoma individuali
+veikla). Žymėtina, kad 2-ame ketvirtyje nedarbas pradėjo mažėti.Jaunimo nedarbas padidėjo labiausiai iki 37%(remiantis LSD duomenimis) tokiu principu išaugo emigracija.
+Žinoma,kad Vyriausybė skyrė lėšas užimtumui didinti. Parengtos sąlygos priimti įstatymą, kuriame įmonės įdarbina darbuotoją pagal laikiną įdarbinimo įmonės įstatymą. 
+
+
+# 2011 metai 
+
+Lyginant su 2010 metais, 2011 metų pradžioje nedarbas krito 0,1 proc., bet žymus
+pasikeitimas įvyko 2-ame ketvirtyje, nedarbo lygis krito 1,5 proc. ir taip kas kiekvieną
+ketvirtį. Metų pabaigoje liko aukštas 13,9 proc. lygis.
+
+
+# 2012 metai 
+
+Ilgalaikis nedarbas išaugęs ženkliai, teigiama, kad jaunimas neturi patirties, gebėjimų, darbo vietos lieka tuščios. 
+Metų pradžioje nedarbas padidėjo palyginus su 2011 metų pabaiga. Situacija
+stabilizavosi ir nedarbas pradėjo kristi iki 12,5 proc., bet skaičius metu pabaigoje vėl
+padidėjo nepilnu 1 procentu.
+Nedarbo nemažėjimui turėjo  įtakos lėtai atsistatanti ekonomika.
+
+
+
+# 2013 metai
+
+Nuo metų pradžios iki vidurio nedarbo lygis sumažėjo iki 10,9 procentų. 4-ame
+ketvirtyje jis vėl pakilo iki 11,4 procentų. 2013
+metais ilgalaikio nedarbo lygiai lieka aukšti, atsiradęs jaunimo nedarbas šiek tiek mažėja. 
+Teigiama, kad trūksta kontakto su nedirbančiais, su tais, kurie nesimoko ir net neieško darbo.
+
+
+# 2014 metai 
+
+2014-aisiais metais, 3-iame ketvirtyje nedarbo lygis nukrito iki 9,1 proc., bet metų
+pabaigoje jis ir vėl pakilo iki 10,1. Teigiama, kad nedarbo lygis vis tiek išlieka aukštas.
+Jaunimas pradeda gauti darbo vietas, bet nedarbo lygis išlieka aukštas. Remiantis nacionaliniais duomenimis, didintant darbo lygį daugiau dėmesio skiriama tiems, kuriems yra žymiai lengviau grįžti į darbą, o tie, kurie yra žemos kvalifikacijos darbininkai, į juos beveik nekreipiama dėmesio.
+
+# 2015 metai 
+
+Pastebimas teigiamas reiškinys, kad lyginant nuo 2015-tų metų pradžios iki pabaigos,
+nedarbo lygis krito nuo 10 proc. iki 8,8 . Nors pastebima, kad 3-iame ketvirtyje lygis
+buvo nukritęs iki 8,3 proc. ir po to 0,5 proc. pakilo.
+Spėjama, kad nedarbas ir toliau mažės:
+ekonomika vis labiau auga, darbdaviai kuria naujas darbo vietas, didėja nominalus darbo užmokestis. 
+
+# 2016 metai 
+
+Pastebima, nedarbingumas ženkliai sumažėjęs iki 7,6 proc. nuo 8,8 proc. Užimtumas nuolat didėja, rodiklis viršija ES vidurkį. Didelę įtaką darė didejantys darbo užmokesčiai, kuriuos gaudavo aukštą kvalifikaciją turintys darbuotojai. 
+
+# 2017 metai 
+
+Užimtumas viršija ES vidurkį, nedarbo lygis sumažėjęs iki 6,7 procentų. Jaunimo nedarbas taip pat sumažėjęs, taip pat minima, kad buvo padidėjus imigracija.
+
+# 2018 metai 
+
+Nedarbo lygis pasiekė rekordiškai mažą lygį – 5,6 proc. galima teigti, nedarbo lygis toks
+pats, koks ir buvo prieš krizę. Panašus nedarbo lygis buvo užfiksuotas kaip ir 2008 metais prieš krizę
+
+
+## Rezultatai
+
+1. Po krizės nedarbo lygis ženkliai padidėjo, tiek sumažėjo atlyginimas ir padidėjo emigracija, tuo pačiu siūlyta didinti užimtumą, BVP augimas krito.
+2. 2012 metais išaugo ilgalaikis nedarbas nuo 1% iki 8%.
+3. 2013 metais ilgalaikio nedarbo lygiai lieka aukšti, atsiradęs jaunimo nedarbas šiek tiek mažėja.
+4. 2015 nedarbo lygis mažėja, atlyginiai didėja, bet vis dėlto jaunimo nedarbas išlieka aukštas, nuolatinė emigracija ir visuomenės senėjimas įtakoja darbo jėgos mažėjimą.
+5. 2017 metais užimtumo lygis viršija ES vidurkį, nedarbas, ilgalaikis nedarbas bei jaunimo nedarbas dar labiau sumažėjo.
+6. 2018 metais užimtumas pasiekė rekordinį lygį, nedarbas sumažėjo iki tokio lygio, koks buvo 2008 metais.
+7. Lietuvos nedarbas mažėjo kiekvienais metais, stengtasi grąžinti buvusią ekonominę situaciją iki krizės.
+
+
+## Išvados
+
+1. Lietuvos užimtumas kiekvienais metais kilo, valstybė tam skyrė dėmesį.
+2. Darbo rinkoje darbo vietų buvo, bet žmonės, kurie gaudavo mažą darbo užmokestį – emigruodavo, darbo vietos liko laisvos.
+3. Taip pat paliesta jaunimo nedarbo tema, tam skirta laikinojo įsidarbinimo alternatyva.
+
+
+## Literatūra
+
